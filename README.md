@@ -12,4 +12,4 @@ python 实现线性回归+梯度下降
 **adagrad**
 ![Aaron Swartz](https://raw.githubusercontent.com/huping404/linear-regression/master/adagrad.png)
 **stochastic**
-![Aaron Swartz](https://raw.githubusercontent.com/huping404/linear-regression/master/stichastic.png)
+![Aaron Swartz](https://raw.githubusercontent.com/huping404/linear-regression/master/stochastic.png)
