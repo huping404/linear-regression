@@ -1,7 +1,8 @@
 # coding:utf-8
-# 使用常数learning rate
+# 利用adagrad公式更新learning rate
 
 import numpy as np
+import math
 
 rate = 0.001
 x_train = np.array([
@@ -31,6 +32,7 @@ while True:
     iter += 1
     current_l = 0
     diff = [0, 0, 0] # 偏微分
+    square_diff = [0, 0, 0]
 
     for x, y in zip(x_train, y_train):
         y_f = theta[0] + theta[1] * x[0] + theta[2] * x[1]
@@ -39,17 +41,21 @@ while True:
         diff[0] += 2 * (y - y_f) * -1
         diff[1] += 2 * (y - y_f) * -x[0]
         diff[2] += 2 * (y - y_f) * -x[1]
+        square_diff[0] += pow(diff[0], 2)
+        square_diff[1] += pow(diff[1], 2)
+        square_diff[2] += pow(diff[2], 2)
 
     # if iter > max_iter:
     if((current_l >= last_l and last_l != 0)):
         break
     else:
         last_l = current_l
-
+        # print diff
+        # print square_diff
         # 梯度下降求新的theta
-        theta[0] = theta[0] - rate * diff[0]
-        theta[1] = theta[1] - rate * diff[1]
-        theta[2] = theta[2] - rate * diff[2]
+        theta[0] = theta[0] - rate / math.sqrt(square_diff[0]) * diff[0]
+        theta[1] = theta[1] - rate / math.sqrt(square_diff[1]) * diff[1]
+        theta[2] = theta[2] - rate / math.sqrt(square_diff[2]) * diff[2]
         # print theta
 
 print theta,iter

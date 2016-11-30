@@ -1,5 +1,5 @@
 # coding:utf-8
-# 使用常数learning rate
+# 利用adagrad公式更新learning rate
 
 import numpy as np
 
@@ -36,9 +36,15 @@ while True:
         y_f = theta[0] + theta[1] * x[0] + theta[2] * x[1]
         y_l = pow((y - y_f),2)
         current_l = current_l + y_l
-        diff[0] += 2 * (y - y_f) * -1
-        diff[1] += 2 * (y - y_f) * -x[0]
-        diff[2] += 2 * (y - y_f) * -x[1]
+        diff[0] = 2 * (y - y_f) * -1
+        diff[1] = 2 * (y - y_f) * -x[0]
+        diff[2] = 2 * (y - y_f) * -x[1]
+
+        # 梯度下降求新的theta
+        theta[0] = theta[0] - rate * diff[0]
+        theta[1] = theta[1] - rate * diff[1]
+        theta[2] = theta[2] - rate * diff[2]
+        # print theta
 
     # if iter > max_iter:
     if((current_l >= last_l and last_l != 0)):
@@ -46,11 +52,7 @@ while True:
     else:
         last_l = current_l
 
-        # 梯度下降求新的theta
-        theta[0] = theta[0] - rate * diff[0]
-        theta[1] = theta[1] - rate * diff[1]
-        theta[2] = theta[2] - rate * diff[2]
-        # print theta
+
 
 print theta,iter
 
